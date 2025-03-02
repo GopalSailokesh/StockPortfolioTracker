@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Portfolio Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>📈 Stock Portfolio Tracker</h2>
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>Quantity</th>
+                <th>Price Per Stock ($)</th>
+                <th>Total Value ($)</th>
+            </tr>
+            {% for stock in portfolio %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.quantity }}</td>
+                <td>${{ stock.price }}</td>
+                <td>${{ stock.total_value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h3>Total Portfolio Value: ${{ total_portfolio_value }}</h3>
+        
+        <h3>➕ Add Stock</h3>
+        <form action="/add" method="post">
+            <input type="text" name="symbol" placeholder="Stock Symbol (e.g., AAPL)" required>
+            <input type="number" name="quantity" placeholder="Quantity" required>
+            <input type="number" step="0.01" name="price" placeholder="Price per Stock ($)" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <h3>❌ Remove Stock</h3>
+        <form action="/remove" method="post">
+            <input type="text" name="symbol" placeholder="Stock Symbol (e.g., TSLA)" required>
+            <button type="submit">Remove</button>
+        </form>
+    </div>
+</body>
+</html>
+
